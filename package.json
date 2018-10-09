@@ -1,0 +1,31 @@
+{
+  "name": "twilioapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dominos": "^2.1.1",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "firebase": "^5.5.1",
+    "http": "0.0.0",
+    "pizzapi": "0.0.8",
+    "twilio": "^3.20.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimbucktoo/twilioapi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jimbucktoo/twilioapi/issues"
+  },
+  "homepage": "https://github.com/jimbucktoo/twilioapi#readme",
+  "description": ""
+}

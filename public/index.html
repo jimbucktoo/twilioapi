@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+        <title>Pizza Bot</title>
+    </head>
+    <body>
+        <div class='center'>
+            <center><h3>Pizza Bot</h3></center>
+            <br>
+            <a href='https://github.com/RIAEvangelist/node-dominos-pizza-api/blob/master/sampleResp/menu8386.json'>Dominos Menu</a>
+            <br>
+            <br>
+            <form action="/action_page.php">
+                Credit Card Number:<br>
+                <input type="text" id='cardnumber' class="inputsq"/>
+                <br><br>
+                Expiration Month:<br>
+                <input type="text" id='expmonth' class="inputsq"/>
+                <br><br>
+                Expiration Year:<br>
+                <input type="text" id='expyear' class="inputsq"/>
+                <br><br>
+                Security Code:<br>
+                <input type="text" id='securitycode' class="inputsq"/>
+                <br><br>
+                Billing Zip Code:<br>
+                <input type="text" id='billingzip' class="inputsq"/>
+                <br><br>
+                Menu Item:<br>
+                <input type="text" id='menuitem' class="inputsq"/>
+            </form> 
+            <br>
+            <img id='dominos' class='dominos' src="dominos.jpg"/>
+            <br>
+            <br>
+            <br>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $( document ).ready(function() {
+                $('#dominos').on('click', function() {
+                    $(this).toggleClass("x-depth-5");         
+                    console.log('Requesting Dominos...');
+                    //var proxy = "http://cors-anywhere.herokuapp.com/";
+                    var development = 'http://localhost:1337';
+                    var sms = 'http://localhost:1337/sms';
+                    var production = "https://twilioapi-io.herokuapp.com/";
+                    fetch(production)
+                        .then(function(response) {
+                            console.log(response);
+                            return response.json();
+                        })
+                        .then(function(myJson) {
+                            console.log(myJson);
+                        });
+
+                    var cardnumber = document.getElementById('cardnumber').value;
+                    var expmonth = document.getElementById('expmonth').value;
+                    var expyear = document.getElementById('expyear').value;
+                    var securitycode = document.getElementById('securitycode').value;
+                    var billingzip = document.getElementById('billingzip').value;
+                    var menuitem = document.getElementById('menuitem').value;
+                    console.log('Card Number: ' + cardnumber);
+                    console.log('Exp. Month: ' + expmonth);
+                    console.log('Exp. Year: ' + expyear);
+                    console.log('Security Code: ' + securitycode);
+                    console.log('Billing Zip Code: ' + billingzip);
+                    console.log('Menu Item: ' + menuitem);
+
+                    $.post( production, {
+                        cardnumber: cardnumber,
+                        expmonth: expmonth,
+                        expyear: expyear,
+                        securitycode: securitycode,
+                        billingzip: billingzip,
+                        menuitem: menuitem
+                    },
+                        function(data, status){
+                            console.log(data);
+                            console.log(status);
+                        });
+                });
+
+                $('#dominos').on('mousedown', function(){
+                    $(this).toggleClass("x-depth-5");         
+                });
+            });
+        </script>
+    </body>
+</html>

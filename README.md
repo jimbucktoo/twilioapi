@@ -15,7 +15,7 @@ twilioapi is a website developed because I am too lazy to fill out all of the in
 
 ## Authors
 
-* **James Liang** - *Initial work* - [jimbucktoo](https://github.com/jimbucktoo/jimbucktoo)
+* **James Liang** - *Initial work* - [jimbucktoo](https://github.com/jimbucktoo/)
 
 ## Pizza Order
 

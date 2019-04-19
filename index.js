@@ -35,17 +35,30 @@ function isYes(msg) {
 }
 
 app.get('/', (req, res) => {
-    const client = require('twilio')(accountSid, authToken);
+    var myStore = new pizzapi.Store({ID: 4336});
+    var store = {menu: "food"}
 
-    client.messages.create({
-        to: '+13149565183',
-        from: '13145825438',
-        body: 'Would you like to order a pizza? [ yes | no ]'
-    }).then(function(message) {
-        res.json(message);
-    }).catch(function(err){
-        res.send(err);
-    });
+    myStore.getMenu(
+        function(storeData){
+            console.log(storeData.menuData);
+            var menu = storeData.menuData;
+            firebase.database().ref('/').set({
+                menu
+            });
+        }
+    );
+
+    //const client = require('twilio')(accountSid, authToken);
+
+    //client.messages.create({
+    //to: '+13149565183',
+    //from: '13145825438',
+    //body: 'Would you like to order a pizza? [ yes | no ]'
+    //}).then(function(message) {
+    //res.json(message);
+    //}).catch(function(err){
+    //res.send(err);
+    //});
 });
 
 app.post('/', (req, res) => {

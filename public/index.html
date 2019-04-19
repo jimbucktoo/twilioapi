@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -22,15 +21,23 @@
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
         <title>Pizza Bot</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <div class='center'>
+            <br>
             <center><h3>Pizza Bot</h3></center>
             <br>
-            <a href='https://github.com/RIAEvangelist/node-dominos-pizza-api/blob/master/sampleResp/menu8386.json'>Dominos Menu</a>
-            <br>
+            <img id='productImage' class='dominos' src="dominos.jpg"/>
             <br>
             <form action="/action_page.php">
+                Menu Item:<br>
+                <div class="product-search">
+                    <input type="text" id='menuitem' class="inputsq"/>
+                    <button id="productSearch" type="button" class="btn btn-primary btn-search">Search Product</button>
+                </div>
+                <br>
                 Credit Card Number:<br>
                 <input type="text" id='cardnumber' class="inputsq"/>
                 <br><br>
@@ -45,19 +52,56 @@
                 <br><br>
                 Billing Zip Code:<br>
                 <input type="text" id='billingzip' class="inputsq"/>
-                <br><br>
-                Menu Item:<br>
-                <input type="text" id='menuitem' class="inputsq"/>
             </form> 
             <br>
-            <img id='dominos' class='dominos' src="dominos.jpg"/>
+            <button id='dominos' class='btn btn-primary' type="button">Submit Order</button>
             <br>
             <br>
             <br>
         </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+        <script>
+            var config = {
+                apiKey: "AIzaSyAzngzitaO5nmWemiZoREbtEPyz5399ikw",
+                authDomain: "twilioapi-9d541.firebaseapp.com",
+                databaseURL: "https://twilioapi-9d541.firebaseio.com",
+                projectId: "twilioapi-9d541",
+                storageBucket: "twilioapi-9d541.appspot.com",
+                messagingSenderId: "586136443689"
+            };
+            firebase.initializeApp(config);
+        </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             $( document ).ready(function() {
+                var database = firebase.database();
+
+                firebase.database().ref('/menu/').once('value').then(function(snapshot) {
+                    var menu = snapshot.val().result;
+                    var categories = snapshot.val().result.Categorization.Food.Categories;
+                    var pizza = snapshot.val().result.Categorization.Food.Categories[0];
+                    var sandwich = snapshot.val().result.Categorization.Food.Categories[1];
+                    var pasta = snapshot.val().result.Categorization.Food.Categories[2];
+                    var wings = snapshot.val().result.Categorization.Food.Categories[3];
+                    var bread = snapshot.val().result.Categorization.Food.Categories[4];
+                    var gsalad = snapshot.val().result.Categorization.Food.Categories[5];
+                    var chips = snapshot.val().result.Categorization.Food.Categories[6];
+                    var drinks = snapshot.val().result.Categorization.Food.Categories[7];
+                    var dessert = snapshot.val().result.Categorization.Food.Categories[8];
+                    var sides = snapshot.val().result.Categorization.Food.Categories[9];
+                    console.log(categories);
+                });
+
+                $('#productSearch').on('click', function() { 
+                    var menuItem = document.getElementById("menuitem").value;
+                    var link = "https://cache.dominos.com/olo/5_58_3/assets/build/market/US/_en/images/img/products/larges/" + menuItem + ".jpg"
+                    console.log(link);
+                    $("#productImage").attr("src", link);
+                });
+
                 $('#dominos').on('click', function() {
                     $(this).toggleClass("x-depth-5");         
                     console.log('Requesting Dominos...');

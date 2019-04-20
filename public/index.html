@@ -34,24 +34,21 @@
             <form action="/action_page.php">
                 Menu Item:<br>
                 <div class="product-search">
-                    <input type="text" id='menuitem' class="inputsq"/>
+                    <input type="text" id='menuitem' class="input-search"/>
                     <button id="productSearch" type="button" class="btn btn-primary btn-search">Search Product</button>
                 </div>
                 <br>
-                Credit Card Number:<br>
-                <input type="text" id='cardnumber' class="inputsq"/>
-                <br><br>
-                Expiration Month:<br>
-                <input type="text" id='expmonth' class="inputsq"/>
-                <br><br>
-                Expiration Year:<br>
-                <input type="text" id='expyear' class="inputsq"/>
-                <br><br>
-                Security Code:<br>
-                <input type="text" id='securitycode' class="inputsq"/>
-                <br><br>
-                Billing Zip Code:<br>
-                <input type="text" id='billingzip' class="inputsq"/>
+                <h5>Payment Information:</h5>
+                <br>
+                <input type="text" id='cardnumber' class="inputsq" placeholder="Payment Card Number"/>
+                <div class="exp">
+                    <input type="text" id='expmonth' class="inputsq exp-month" placeholder="Exp. Month"/>
+                    <input type="text" id='expyear' class="inputsq exp-year" placeholder="Exp. Year"/>
+                </div>
+                <div class="exp">
+                    <input type="text" id='securitycode' class="inputsq sec-code" placeholder="Security Code"/>
+                    <input type="text" id='billingzip' class="inputsq billing-zip" placeholder="Billing Zip Code"/>
+                </div>
             </form> 
             <br>
             <button id='dominos' class='btn btn-primary' type="button">Submit Order</button>

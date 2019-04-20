@@ -14,7 +14,7 @@
     "dominos": "^2.1.1",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "firebase": "^5.5.1",
+    "firebase": "^5.10.0",
     "http": "0.0.0",
     "pizzapi": "0.0.8",
     "twilio": "^3.20.0"

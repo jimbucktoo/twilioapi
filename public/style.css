@@ -5,9 +5,18 @@
     align-items: center;
 }
 
-.inputsq {
+.input-search {
     width: 100%;
     border: 1px solid black;
+}
+
+.inputsq {
+    width: 100%;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 .dominos {
@@ -27,4 +36,37 @@
 .btn-search {
     border: none;
     border-radius: 0px;
+}
+
+.exp {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.exp-month {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.exp-year {
+    margin-left: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.sec-code {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.billing-zip {
+    margin-left: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+::placeholder {
+    color: #007bff;
+    margin-left: 3px;
 }

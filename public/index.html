@@ -38,6 +38,25 @@
                     <button id="productSearch" type="button" class="btn btn-primary btn-search">Search Product</button>
                 </div>
                 <br>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Pizza</a>
+                        <a class="dropdown-item" href="#">Sandwich</a>
+                        <a class="dropdown-item" href="#">Pasta</a>
+                        <a class="dropdown-item" href="#">Wings</a>
+                        <a class="dropdown-item" href="#">Bread</a>
+                        <a class="dropdown-item" href="#">GSalad</a>
+                        <a class="dropdown-item" href="#">Chips</a>
+                        <a class="dropdown-item" href="#">Drinks</a>
+                        <a class="dropdown-item" href="#">Dessert</a>
+                        <a class="dropdown-item" href="#">Sides</a>
+                    </div>
+                </div>
+                <br>
+                <br>
                 <h5>Payment Information:</h5>
                 <br>
                 <input type="text" id='cardnumber' class="inputsq" placeholder="Payment Card Number"/>
@@ -78,6 +97,7 @@
 
                 firebase.database().ref('/menu/').once('value').then(function(snapshot) {
                     var menu = snapshot.val().result;
+                    var products = snapshot.val().result.Products;
                     var categories = snapshot.val().result.Categorization.Food.Categories;
                     var pizza = snapshot.val().result.Categorization.Food.Categories[0];
                     var sandwich = snapshot.val().result.Categorization.Food.Categories[1];
@@ -89,7 +109,34 @@
                     var drinks = snapshot.val().result.Categorization.Food.Categories[7];
                     var dessert = snapshot.val().result.Categorization.Food.Categories[8];
                     var sides = snapshot.val().result.Categorization.Food.Categories[9];
-                    console.log(categories);
+                    console.log(menu);
+
+                    function getPizzaData(){
+                        var pizzaList = snapshot.val().result.Categorization.Food.Categories[0].Categories[2].Products;
+                        var pizzaDataArray = [];
+
+                        for (let i = 0; i < pizzaList.length; i++){
+                            var prodInfo = products[pizzaList[i]]
+                            pizzaDataArray.push(prodInfo)
+                        }
+
+                        return pizzaDataArray
+                    }
+
+                    var pizzaArray = getPizzaData();
+
+                    function getPizzaNames(pizzaArray){
+                        var pizzaNames = [];
+
+                        for (let i = 0; i < pizzaArray.length; i++){
+                            pizzaNames.push(pizzaArray[i].Name)
+                        }
+
+                        return pizzaNames;
+                    }
+
+                    console.log(pizzaArray)
+                    console.log(getPizzaNames(pizzaArray))
                 });
 
                 $('#productSearch').on('click', function() { 

@@ -38,24 +38,32 @@
                     <button id="productSearch" type="button" class="btn btn-primary btn-search">Search Product</button>
                 </div>
                 <br>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Category
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Pizza</a>
-                        <a class="dropdown-item" href="#">Sandwich</a>
-                        <a class="dropdown-item" href="#">Pasta</a>
-                        <a class="dropdown-item" href="#">Wings</a>
-                        <a class="dropdown-item" href="#">Bread</a>
-                        <a class="dropdown-item" href="#">GSalad</a>
-                        <a class="dropdown-item" href="#">Chips</a>
-                        <a class="dropdown-item" href="#">Drinks</a>
-                        <a class="dropdown-item" href="#">Dessert</a>
-                        <a class="dropdown-item" href="#">Sides</a>
+                <div class="space-between">
+                    <div class="btn-group">
+                        <button type="button" id="btn-category" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Category
+                        </button>
+                        <div class="dropdown-menu dropdown-category" id="dropdown-list">
+                            <a class="dropdown-item" href="#">Pizza</a>
+                            <a class="dropdown-item" href="#">Sandwich</a>
+                            <a class="dropdown-item" href="#">Pasta</a>
+                            <a class="dropdown-item" href="#">Wings</a>
+                            <a class="dropdown-item" href="#">Bread</a>
+                            <a class="dropdown-item" href="#">GSalad</a>
+                            <a class="dropdown-item" href="#">Chips</a>
+                            <a class="dropdown-item" href="#">Drinks</a>
+                            <a class="dropdown-item" href="#">Dessert</a>
+                            <a class="dropdown-item" href="#">Sides</a>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" id="btn-item" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Item
+                        </button>
+                        <div class="dropdown-menu dropdown-items" id="test-dropdown-list">
+                        </div>
                     </div>
                 </div>
-                <br>
                 <br>
                 <h5>Payment Information:</h5>
                 <br>
@@ -93,6 +101,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             $( document ).ready(function() {
+
                 var database = firebase.database();
 
                 firebase.database().ref('/menu/').once('value').then(function(snapshot) {
@@ -110,33 +119,62 @@
                     var dessert = snapshot.val().result.Categorization.Food.Categories[8];
                     var sides = snapshot.val().result.Categorization.Food.Categories[9];
                     console.log(menu);
+                });
 
-                    function getPizzaData(){
-                        var pizzaList = snapshot.val().result.Categorization.Food.Categories[0].Categories[2].Products;
-                        var pizzaDataArray = [];
+                $("body").on("click", ".dropdown-items a", function(){
+                    var item = $(this)[0].text;
+                    console.log(item)
+                    $("#btn-item").text(item);
+                });
 
-                        for (let i = 0; i < pizzaList.length; i++){
-                            var prodInfo = products[pizzaList[i]]
-                            pizzaDataArray.push(prodInfo)
-                        }
+                $('.dropdown-category a').on('click', function() { 
+                    var category = $(this)[0].text;
+                    console.log(category)
+                    $("#btn-category").text(category);
+                    if (category == "Pizza"){
 
-                        return pizzaDataArray
+                        firebase.database().ref('/menu/').once('value').then(function(snapshot) {
+                            function getPizzaData(){
+                                var products = snapshot.val().result.Products;
+                                var pizzaList = snapshot.val().result.Categorization.Food.Categories[0].Categories[2].Products;
+                                var pizzaDataArray = [];
+
+                                for (let i = 0; i < pizzaList.length; i++){
+                                    var prodInfo = products[pizzaList[i]]
+                                    pizzaDataArray.push(prodInfo)
+                                }
+
+                                return pizzaDataArray
+                            }
+
+                            var pizzaArray = getPizzaData();
+
+                            function getPizzaNames(pizzaArray){
+                                var pizzaNames = [];
+
+                                for (let i = 0; i < pizzaArray.length; i++){
+                                    pizzaNames.push(pizzaArray[i].Name)
+                                }
+
+                                return pizzaNames;
+                            }
+
+                            console.log(pizzaArray)
+                            var pizzaNamesList = getPizzaNames(pizzaArray)
+                            console.log(pizzaNamesList)
+
+                            var thisUL = document.getElementById('text-dropdown-list');
+                            for(var i = 0; i < pizzaNamesList.length; i++) {
+                                var link = document.createElement('a');
+                                var drop = document.getElementById('test-dropdown-list');
+                                link.text = pizzaNamesList[i]
+                                link.setAttribute('class', "dropdown-item");
+                                link.setAttribute('href', "#");
+                                drop.appendChild(link)
+                            }
+
+                        });
                     }
-
-                    var pizzaArray = getPizzaData();
-
-                    function getPizzaNames(pizzaArray){
-                        var pizzaNames = [];
-
-                        for (let i = 0; i < pizzaArray.length; i++){
-                            pizzaNames.push(pizzaArray[i].Name)
-                        }
-
-                        return pizzaNames;
-                    }
-
-                    console.log(pizzaArray)
-                    console.log(getPizzaNames(pizzaArray))
                 });
 
                 $('#productSearch').on('click', function() { 

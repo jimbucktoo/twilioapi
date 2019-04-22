@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
 .input-search {
     width: 100%;
     border: 1px solid black;

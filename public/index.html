@@ -131,11 +131,14 @@
                     var category = $(this)[0].text;
                     console.log(category)
                     $("#btn-category").text(category);
-                    if (category == "Pizza"){
-                        firebase.database().ref('/menu/').once('value').then(function(snapshot) {
+
+                    firebase.database().ref('/menu/').once('value').then(function(snapshot) {
+                        var food = snapshot.val().result.Categorization.Food;
+                        var products = snapshot.val().result.Products;
+                        var pizzaList = food.Categories[0].Categories[2].Products;
+
+                        if (category == "Pizza"){
                             function getPizzaData(){
-                                var products = snapshot.val().result.Products;
-                                var pizzaList = snapshot.val().result.Categorization.Food.Categories[0].Categories[2].Products;
                                 var pizzaDataArray = [];
 
                                 for (let i = 0; i < pizzaList.length; i++){
@@ -172,8 +175,9 @@
                                 drop.appendChild(link)
                             }
 
-                        });
-                    }
+                        }
+
+                    });
                 });
 
                 $('#productSearch').on('click', function() { 

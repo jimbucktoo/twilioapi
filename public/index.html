@@ -132,7 +132,6 @@
                     console.log(category)
                     $("#btn-category").text(category);
                     if (category == "Pizza"){
-
                         firebase.database().ref('/menu/').once('value').then(function(snapshot) {
                             function getPizzaData(){
                                 var products = snapshot.val().result.Products;

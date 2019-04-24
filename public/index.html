@@ -100,7 +100,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             $( document ).ready(function() {
-
                 var database = firebase.database()
 
                 firebase.database().ref('/menu/').once('value').then(function(snapshot) {
@@ -151,25 +150,25 @@
                                 var prodInfo = products[foodList[i]]
                                 foodDataArray.push(prodInfo)
                             }
-
                             return foodDataArray
                         }
 
                         function getFoodNames(foodArray){
                             var foodNames = []
-
                             for (let i = 0; i < foodArray.length; i++){
                                 foodNames.push(foodArray[i].Name)
                             }
-
                             return foodNames
                         }
 
                         function populateItems(foodNamesList){
                             var thisUL = document.getElementById('text-dropdown-list')
+                            var drop = document.getElementById('test-dropdown-list')
+                            while (drop.hasChildNodes()) {
+                                drop.removeChild(drop.firstChild);
+                            }
                             for(var i = 0; i < foodNamesList.length; i++) {
                                 var link = document.createElement('a')
-                                var drop = document.getElementById('test-dropdown-list')
                                 link.text = foodNamesList[i]
                                 link.setAttribute('class', "dropdown-item")
                                 link.setAttribute('href', "#")
@@ -251,7 +250,6 @@
                             default:
                                 console.log("default")
                         }
-
                     })
                 })
 
@@ -269,6 +267,7 @@
                     var development = 'http://localhost:1337'
                     var sms = 'http://localhost:1337/sms'
                     var production = "https://twilioapi-io.herokuapp.com/"
+
                     fetch(production)
                         .then(function(response) {
                             console.log(response)

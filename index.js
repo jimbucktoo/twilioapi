@@ -40,13 +40,14 @@ app.get("/", (req, res) => {
 
     myStore.getMenu(
         function(storeData){
-            console.log(storeData.menuData)
             var menu = storeData.menuData
             firebase.database().ref("/").set({
                 menu
             })
         }
     )
+
+    res.send("Exit Code 0")
 
     //const client = require("twilio")(accountSid, authToken)
 
@@ -197,4 +198,4 @@ http.createServer(app).listen(port, () => {
     console.log("port: " + port)
 })
 
-console.log("200 OK")
+console.log("Exit Code 0")

@@ -22,23 +22,19 @@
         <meta name="theme-color" content="#ffffff">
         <title>Pizza Bot</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="./style.css">
     </head>
     <body>
-        <div class='center'>
+        <div class="center">
             <br>
             <center><h3>Pizza Bot</h3></center>
             <br>
-            <img id='productImage' class='dominos' src="dominos.jpg"/>
+            <img id="productImage" class="dominos" src="dominos.jpg"/>
             <br>
             <form action="/action_page.php">
-                Menu Item:<br>
-                <div class="product-search">
-                    <input type="text" id='menuitem' class="input-search"/>
-                    <button id="productSearch" type="button" class="btn btn-primary btn-search">Search Product</button>
-                </div>
+                <div class="center" id="directions">SELECT A CATEGORY</div>
                 <br>
-                <div class="space-between">
+                <div class="">
                     <div class="btn-group">
                         <button type="button" id="btn-category" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Category
@@ -56,7 +52,7 @@
                         </div>
                     </div>
                     <div class="btn-group">
-                        <button type="button" id="btn-item" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" id="btn-item" class="hidden btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Item
                         </button>
                         <div class="dropdown-menu dropdown-items" id="test-dropdown-list">
@@ -66,18 +62,18 @@
                 <br>
                 <h5>Payment Information:</h5>
                 <br>
-                <input type="text" id='cardnumber' class="inputsq" placeholder="Payment Card Number"/>
+                <input type="text" id="cardnumber" class="inputsq" placeholder="Payment Card Number"/>
                 <div class="exp">
-                    <input type="text" id='expmonth' class="inputsq exp-month" placeholder="Exp. Month"/>
-                    <input type="text" id='expyear' class="inputsq exp-year" placeholder="Exp. Year"/>
+                    <input type="text" id="expmonth" class="inputsq exp-month" placeholder="Exp. Month"/>
+                    <input type="text" id="expyear" class="inputsq exp-year" placeholder="Exp. Year"/>
                 </div>
                 <div class="exp">
-                    <input type="text" id='securitycode' class="inputsq sec-code" placeholder="Security Code"/>
-                    <input type="text" id='billingzip' class="inputsq billing-zip" placeholder="Billing Zip Code"/>
+                    <input type="text" id="securitycode" class="inputsq sec-code" placeholder="Security Code"/>
+                    <input type="text" id="billingzip" class="inputsq billing-zip" placeholder="Billing Zip Code"/>
                 </div>
             </form> 
             <br>
-            <button id='dominos' class='btn btn-primary' type="button">Submit Order</button>
+            <button id="dominos" class="btn btn-primary" type="button">Submit Order</button>
             <br>
             <br>
             <br>
@@ -101,8 +97,7 @@
         <script>
             $( document ).ready(function() {
                 var database = firebase.database()
-
-                firebase.database().ref('/menu/').once('value').then(function(snapshot) {
+                firebase.database().ref("/menu/").once("value").then(function(snapshot) {
                     var menu = snapshot.val().result
                     var products = snapshot.val().result.Products
                     var categories = snapshot.val().result.Categorization.Food.Categories
@@ -117,22 +112,28 @@
                     var dessert = snapshot.val().result.Categorization.Food.Categories[8]
                     var sides = snapshot.val().result.Categorization.Food.Categories[9]
                     console.log(menu)
-                })
 
-                $("body").on("click", ".dropdown-items a", function(){
-                    var item = $(this)[0].text
-                    console.log(item)
-                    $("#btn-item").text(item)
-                })
+                    $("body").on("click", ".dropdown-items a", function(){
+                        console.log(this.text)
+                        var prodName = this.text
+                        $("#directions").text(prodName)
+                        for (var key in products) {
+                            if(products[key].Name == prodName){
+                                var prodCode = products[key].Code
+                                var link = "https://cache.dominos.com/olo/5_58_3/assets/build/market/US/_en/images/img/products/larges/" + prodCode + ".jpg"
+                                console.log(link)
+                                $("#productImage").attr("src", link)
+                            }
+                        }
+                    })
 
-                $('.dropdown-category a').on('click', function() { 
-                    var category = $(this)[0].text
-                    console.log(category)
-                    $("#btn-category").text(category)
+                    $(".dropdown-category a").on("click", function() { 
+                        var category = $(this)[0].text
+                        $("#btn-item").text(category)
+                        $("#directions").text("SELECT AN ITEM")
+                        $("#btn-item").removeClass("hidden")
 
-                    firebase.database().ref('/menu/').once('value').then(function(snapshot) {
                         var food = snapshot.val().result.Categorization.Food
-                        var products = snapshot.val().result.Products
                         var pizzaList = food.Categories[0].Categories[2].Products
                         var sandwichList = food.Categories[1].Categories[1].Products
                         var pastaList = food.Categories[2].Products
@@ -145,7 +146,6 @@
 
                         function getFoodData(foodList){
                             var foodDataArray = []
-                            console.log(foodList)
                             for (let i = 0; i < foodList.length; i++){
                                 var prodInfo = products[foodList[i]]
                                 foodDataArray.push(prodInfo)
@@ -162,16 +162,17 @@
                         }
 
                         function populateItems(foodNamesList){
-                            var thisUL = document.getElementById('text-dropdown-list')
-                            var drop = document.getElementById('test-dropdown-list')
+                            var thisUL = document.getElementById("text-dropdown-list")
+                            var drop = document.getElementById("test-dropdown-list")
                             while (drop.hasChildNodes()) {
                                 drop.removeChild(drop.firstChild);
                             }
                             for(var i = 0; i < foodNamesList.length; i++) {
-                                var link = document.createElement('a')
+                                var link = document.createElement("a")
                                 link.text = foodNamesList[i]
-                                link.setAttribute('class', "dropdown-item")
-                                link.setAttribute('href', "#")
+                                link.setAttribute("class", "dropdown-item")
+                                $(".dropdown-item").addClass("menu-item");
+                                link.setAttribute("href", "#")
                                 drop.appendChild(link)
                             }
                         }
@@ -179,133 +180,106 @@
                         switch(category) {
                             case "Pizza":
                                 var pizzaArray = getFoodData(pizzaList)
-                                console.log(pizzaArray)
                                 var pizzaNamesList = getFoodNames(pizzaArray)
-                                console.log(pizzaNamesList)
                                 populateItems(pizzaNamesList)
                                 break;
                             case "Sandwich":
                                 var sandwichArray = getFoodData(sandwichList)
-                                console.log(sandwichArray)
                                 var sandwichNamesList = getFoodNames(sandwichArray)
-                                console.log(sandwichNamesList)
                                 populateItems(sandwichNamesList)
                                 break;
                             case "Pasta":
                                 var pastaArray = getFoodData(pastaList)
-                                console.log(pastaArray)
                                 var pastaNamesList = getFoodNames(pastaArray)
-                                console.log(pastaNamesList)
                                 populateItems(pastaNamesList)
                                 break;
                             case "Wings":
                                 var wingsArray = getFoodData(wingsList)
-                                console.log(wingsArray)
                                 var wingsNamesList = getFoodNames(wingsArray)
-                                console.log(wingsNamesList)
                                 populateItems(wingsNamesList)
                                 break;
                             case "Bread":
                                 var breadArray = getFoodData(breadList)
-                                console.log(breadArray)
                                 var breadNamesList = getFoodNames(breadArray)
-                                console.log(breadNamesList)
                                 populateItems(breadNamesList)
                                 break;
                             case "GSalad":
                                 var gsaladArray = getFoodData(gsaladList)
-                                console.log(gsaladArray)
                                 var gsaladNamesList = getFoodNames(gsaladArray)
-                                console.log(gsaladNamesList)
                                 populateItems(gsaladNamesList)
                                 break;
                             case "GSalad":
                                 var gsaladArray = getFoodData(gsaladList)
-                                console.log(gsaladArray)
                                 var gsaladNamesList = getFoodNames(gsaladArray)
-                                console.log(gsaladNamesList)
                                 populateItems(gsaladNamesList)
                                 break;
                             case "Drinks":
                                 var drinksArray = getFoodData(drinksList)
-                                console.log(drinksArray)
                                 var drinksNamesList = getFoodNames(drinksArray)
-                                console.log(drinksNamesList)
                                 populateItems(drinksNamesList)
                                 break;
                             case "Dessert":
                                 var dessertArray = getFoodData(dessertList)
-                                console.log(dessertArray)
                                 var dessertNamesList = getFoodNames(dessertArray)
-                                console.log(dessertNamesList)
                                 populateItems(dessertNamesList)
                                 break;
                             case "Sides":
                                 var sidesArray = getFoodData(sidesList)
-                                console.log(sidesArray)
                                 var sidesNamesList = getFoodNames(sidesArray)
-                                console.log(sidesNamesList)
                                 populateItems(sidesNamesList)
                                 break;
                             default:
-                                console.log("default")
+                                break;
                         }
                     })
-                })
 
-                $('#productSearch').on('click', function() { 
-                    var menuItem = document.getElementById("menuitem").value
-                    var link = "https://cache.dominos.com/olo/5_58_3/assets/build/market/US/_en/images/img/products/larges/" + menuItem + ".jpg"
-                    console.log(link)
-                    $("#productImage").attr("src", link)
-                })
+                    $("#dominos").on("click", function() {
+                        $(this).toggleClass("x-depth-5")         
+                        console.log("Requesting Dominos...")
+                        //var proxy = "http://cors-anywhere.herokuapp.com/"
+                        var development = "http://localhost:1337"
+                        var sms = "http://localhost:1337/sms"
+                        var production = "https://twilioapi-io.herokuapp.com/"
 
-                $('#dominos').on('click', function() {
-                    $(this).toggleClass("x-depth-5")         
-                    console.log('Requesting Dominos...')
-                    //var proxy = "http://cors-anywhere.herokuapp.com/"
-                    var development = 'http://localhost:1337'
-                    var sms = 'http://localhost:1337/sms'
-                    var production = "https://twilioapi-io.herokuapp.com/"
+                        fetch(production)
+                            .then(function(response) {
+                                console.log(response)
+                                return response.json()
+                            })
+                            .then(function(myJson) {
+                                console.log(myJson)
+                            })
 
-                    fetch(production)
-                        .then(function(response) {
-                            console.log(response)
-                            return response.json()
-                        })
-                        .then(function(myJson) {
-                            console.log(myJson)
-                        })
+                        var cardnumber = document.getElementById("cardnumber").value
+                        var expmonth = document.getElementById("expmonth").value
+                        var expyear = document.getElementById("expyear").value
+                        var securitycode = document.getElementById("securitycode").value
+                        var billingzip = document.getElementById("billingzip").value
+                        var menuitem = document.getElementById("menuitem").value
+                        console.log("Card Number: " + cardnumber)
+                        console.log("Exp. Month: " + expmonth)
+                        console.log("Exp. Year: " + expyear)
+                        console.log("Security Code: " + securitycode)
+                        console.log("Billing Zip Code: " + billingzip)
+                        console.log("Menu Item: " + menuitem)
 
-                    var cardnumber = document.getElementById('cardnumber').value
-                    var expmonth = document.getElementById('expmonth').value
-                    var expyear = document.getElementById('expyear').value
-                    var securitycode = document.getElementById('securitycode').value
-                    var billingzip = document.getElementById('billingzip').value
-                    var menuitem = document.getElementById('menuitem').value
-                    console.log('Card Number: ' + cardnumber)
-                    console.log('Exp. Month: ' + expmonth)
-                    console.log('Exp. Year: ' + expyear)
-                    console.log('Security Code: ' + securitycode)
-                    console.log('Billing Zip Code: ' + billingzip)
-                    console.log('Menu Item: ' + menuitem)
+                        $.post( production, {
+                            cardnumber: cardnumber,
+                            expmonth: expmonth,
+                            expyear: expyear,
+                            securitycode: securitycode,
+                            billingzip: billingzip,
+                            menuitem: menuitem
+                        },
+                            function(data, status){
+                                console.log(data)
+                                console.log(status)
+                            })
+                    })
 
-                    $.post( production, {
-                        cardnumber: cardnumber,
-                        expmonth: expmonth,
-                        expyear: expyear,
-                        securitycode: securitycode,
-                        billingzip: billingzip,
-                        menuitem: menuitem
-                    },
-                        function(data, status){
-                            console.log(data)
-                            console.log(status)
-                        })
-                })
-
-                $('#dominos').on('mousedown', function(){
-                    $(this).toggleClass("x-depth-5")         
+                    $("#dominos").on("mousedown", function(){
+                        $(this).toggleClass("x-depth-5")         
+                    })
                 })
             })
         </script>

@@ -87,7 +87,7 @@ app.post("/sms", (req, res) => {
             "1644 Platte St., Denver, CO, 80203",
             "Delivery",
             function(storeData){
-                var readRef = firebase.database().ref("/firebaseObj")
+                var readRef = firebase.database().ref("/order/firebaseObj")
                 readRef.on("value", function(snapshot) {
                     var cardNumber = snapshot.val().cardnumber
                     var expMonth = snapshot.val().expmonth

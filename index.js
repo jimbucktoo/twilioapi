@@ -81,6 +81,7 @@ app.post("/sms", (req, res) => {
         res.writeHead(200, {"Content-Type": "text/xml"})
         res.end(twiml.toString())
     } else {
+        console.log("Confirmation")
         pizzapi.Util.findNearbyStores(
             "1644 Platte St., Denver, CO, 80203",
             "Delivery",
@@ -151,8 +152,6 @@ app.post("/sms", (req, res) => {
                     cardInfo.SecurityCode = securityCode
                     cardInfo.PostalCode = billingZip
                     order.Payments.push(cardInfo)
-                    console.log(cardInfo)
-                    console.log(order)
 
                     //order.validate(
                     //function(result) {
@@ -182,7 +181,7 @@ app.post("/sms", (req, res) => {
                     //}
                     //)
 
-                    console.log("Order: " + JSON.stringify(order))
+                    //console.log("Order: " + JSON.stringify(order))
 
                     twiml.message("Order sent. Don\"t forget to tip the driver.")
                     res.writeHead(200, {"Content-Type": "text/xml"})

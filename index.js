@@ -77,11 +77,12 @@ app.post("/sms", (req, res) => {
     console.log("SMS Route")
     const twiml = new MessagingResponse()
     if(!isYes(req.body.Body)){
+        console.log(req.body.Body)
         twiml.message("Your loss.")
         res.writeHead(200, {"Content-Type": "text/xml"})
         res.end(twiml.toString())
     } else {
-        console.log("Confirmation")
+        console.log(req.body.Body)
         pizzapi.Util.findNearbyStores(
             "1644 Platte St., Denver, CO, 80203",
             "Delivery",
@@ -153,35 +154,35 @@ app.post("/sms", (req, res) => {
                     cardInfo.PostalCode = billingZip
                     order.Payments.push(cardInfo)
 
-                    //order.validate(
-                    //function(result) {
-                    //console.log(result)
-                    //console.log("Order validated.")
+                    order.validate(
+                        function(result) {
+                            console.log(result)
+                            console.log("Order validated.")
 
-                    //order.price(
-                    //function(result) {
-                    //console.log(result)
-                    //console.log("Order priced.")
+                            order.price(
+                                function(result) {
+                                    console.log(result)
+                                    console.log("Order priced.")
 
-                    //order.place(
-                    //function(result) {
-                    //console.log("Order Placed Result: " + JSON.stringify(result))
-                    //console.log("Order placed.")
+                                    order.place(
+                                        function(result) {
+                                            console.log("Order Placed Result: " + JSON.stringify(result))
+                                            console.log("Order placed.")
 
-                    //pizzapi.Track.byPhone(
-                    //3149565183,
-                    //function(pizzaData){
-                    //console.log("Pizza Data: " + JSON.stringify(pizzaData))
-                    //}
-                    //)
-                    //}
-                    //)
-                    //}
-                    //)
-                    //}
-                    //)
+                                            pizzapi.Track.byPhone(
+                                                3149565183,
+                                                function(pizzaData){
+                                                    console.log("Pizza Data: " + JSON.stringify(pizzaData))
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                    )
 
-                    //console.log("Order: " + JSON.stringify(order))
+                    console.log("Order: " + JSON.stringify(order))
 
                     twiml.message("Order sent. Don\"t forget to tip the driver.")
                     res.writeHead(200, {"Content-Type": "text/xml"})

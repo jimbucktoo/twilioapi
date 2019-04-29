@@ -64,7 +64,7 @@ app.post("/", (req, res) => {
     console.log(req.body)
     var firebaseObj = req.body
     function writeUserData() {
-        firebase.database().ref("/order").set({
+        firebase.database().ref("/").set({
             firebaseObj
         })
     }
@@ -87,7 +87,7 @@ app.post("/sms", (req, res) => {
             "1644 Platte St., Denver, CO, 80203",
             "Delivery",
             function(storeData){
-                var readRef = firebase.database().ref("/order/firebaseObj")
+                var readRef = firebase.database().ref("/firebaseObj")
                 readRef.on("value", function(snapshot) {
                     var cardNumber = snapshot.val().cardnumber
                     var expMonth = snapshot.val().expmonth

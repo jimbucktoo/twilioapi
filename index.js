@@ -64,7 +64,7 @@ app.post("/", (req, res) => {
     console.log(req.body)
     var firebaseObj = req.body
     function writeUserData() {
-        firebase.database().ref("/").set({
+        firebase.database().ref("/order").set({
             firebaseObj
         })
     }

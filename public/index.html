@@ -98,7 +98,7 @@
             $( document ).ready(function() {
                 var database = firebase.database()
                 var menuItem
-                firebase.database().ref("/menu/").once("value").then(function(snapshot) {
+                firebase.database().ref("/menu/menu/").once("value").then(function(snapshot) {
                     var menu = snapshot.val().result
                     var products = snapshot.val().result.Products
                     var categories = snapshot.val().result.Categorization.Food.Categories

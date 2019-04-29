@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
     myStore.getMenu(
         function(storeData){
             var menu = storeData.menuData
-            firebase.database().ref("/").set({
+            firebase.database().ref("/menu").set({
                 menu
             })
         }

@@ -74,15 +74,12 @@ app.post("/", (req, res) => {
 })
 
 app.post("/sms", (req, res) => {
-    console.log("SMS Route")
     const twiml = new MessagingResponse()
     if(!isYes(req.body.Body)){
-        console.log(req.body.Body)
         twiml.message("Your loss.")
         res.writeHead(200, {"Content-Type": "text/xml"})
         res.end(twiml.toString())
     } else {
-        console.log(req.body.Body)
         pizzapi.Util.findNearbyStores(
             "1644 Platte St., Denver, CO, 80203",
             "Delivery",
@@ -184,7 +181,7 @@ app.post("/sms", (req, res) => {
 
                     console.log("Order: " + JSON.stringify(order))
 
-                    twiml.message("Order sent. Don\"t forget to tip the driver.")
+                    twiml.message("Order sent. Don\'t forget to tip the driver.")
                     res.writeHead(200, {"Content-Type": "text/xml"})
                     res.end(twiml.toString())
                 })

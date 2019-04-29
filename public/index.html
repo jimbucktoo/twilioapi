@@ -97,6 +97,7 @@
         <script>
             $( document ).ready(function() {
                 var database = firebase.database()
+                var menuItem
                 firebase.database().ref("/menu/").once("value").then(function(snapshot) {
                     var menu = snapshot.val().result
                     var products = snapshot.val().result.Products
@@ -123,6 +124,8 @@
                                 var link = "https://cache.dominos.com/olo/5_58_3/assets/build/market/US/_en/images/img/products/larges/" + prodCode + ".jpg"
                                 console.log(link)
                                 $("#productImage").attr("src", link)
+                                menuItem = prodCode
+                                console.log(menuItem)
                             }
                         }
                     })
@@ -255,13 +258,12 @@
                         var expyear = document.getElementById("expyear").value
                         var securitycode = document.getElementById("securitycode").value
                         var billingzip = document.getElementById("billingzip").value
-                        var menuitem = document.getElementById("menuitem").value
                         console.log("Card Number: " + cardnumber)
                         console.log("Exp. Month: " + expmonth)
                         console.log("Exp. Year: " + expyear)
                         console.log("Security Code: " + securitycode)
                         console.log("Billing Zip Code: " + billingzip)
-                        console.log("Menu Item: " + menuitem)
+                        console.log("Menu Item: " + menuItem)
 
                         $.post( production, {
                             cardnumber: cardnumber,
@@ -269,7 +271,7 @@
                             expyear: expyear,
                             securitycode: securitycode,
                             billingzip: billingzip,
-                            menuitem: menuitem
+                            menuitem: menuItem
                         },
                             function(data, status){
                                 console.log(data)

@@ -47,19 +47,17 @@ app.get("/", (req, res) => {
         }
     )
 
-    res.send("Exit Code 0")
+    const client = require("twilio")(accountSid, authToken)
 
-    //const client = require("twilio")(accountSid, authToken)
-
-    //client.messages.create({
-    //to: "+13149565183",
-    //from: "13145825438",
-    //body: "Would you like to order a pizza? [ yes | no ]"
-    //}).then(function(message) {
-    //res.json(message)
-    //}).catch(function(err){
-    //res.send(err)
-    //})
+    client.messages.create({
+        to: "+13149565183",
+        from: "13145825438",
+        body: "Would you like to order a pizza? [ yes | no ]"
+    }).then(function(message) {
+        res.json(message)
+    }).catch(function(err){
+        res.send(err)
+    })
 })
 
 app.post("/", (req, res) => {
@@ -76,6 +74,7 @@ app.post("/", (req, res) => {
 })
 
 app.post("/sms", (req, res) => {
+    console.log("SMS Route")
     const twiml = new MessagingResponse()
     if(!isYes(req.body.Body)){
         twiml.message("Your loss.")
@@ -152,34 +151,36 @@ app.post("/sms", (req, res) => {
                     cardInfo.SecurityCode = securityCode
                     cardInfo.PostalCode = billingZip
                     order.Payments.push(cardInfo)
+                    console.log(cardInfo)
+                    console.log(order)
 
-                    order.validate(
-                        function(result) {
-                            console.log(result)
-                            console.log("Order validated.")
+                    //order.validate(
+                    //function(result) {
+                    //console.log(result)
+                    //console.log("Order validated.")
 
-                            order.price(
-                                function(result) {
-                                    console.log(result)
-                                    console.log("Order priced.")
+                    //order.price(
+                    //function(result) {
+                    //console.log(result)
+                    //console.log("Order priced.")
 
-                                    order.place(
-                                        function(result) {
-                                            console.log("Order Placed Result: " + JSON.stringify(result))
-                                            console.log("Order placed.")
+                    //order.place(
+                    //function(result) {
+                    //console.log("Order Placed Result: " + JSON.stringify(result))
+                    //console.log("Order placed.")
 
-                                            pizzapi.Track.byPhone(
-                                                3149565183,
-                                                function(pizzaData){
-                                                    console.log("Pizza Data: " + JSON.stringify(pizzaData))
-                                                }
-                                            )
-                                        }
-                                    )
-                                }
-                            )
-                        }
-                    )
+                    //pizzapi.Track.byPhone(
+                    //3149565183,
+                    //function(pizzaData){
+                    //console.log("Pizza Data: " + JSON.stringify(pizzaData))
+                    //}
+                    //)
+                    //}
+                    //)
+                    //}
+                    //)
+                    //}
+                    //)
 
                     console.log("Order: " + JSON.stringify(order))
 

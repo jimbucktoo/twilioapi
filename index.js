@@ -83,7 +83,6 @@ app.post("/sms", (req, res) => {
         res.end(twiml.toString())
     } else {
         console.log(req.body.Body)
-        twiml.message("Order Processing...")
         pizzapi.Util.findNearbyStores(
             "1644 Platte St., Denver, CO, 80203",
             "Delivery",

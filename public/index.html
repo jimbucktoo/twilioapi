@@ -9,41 +9,42 @@
         <link rel="stylesheet" type="text/css" href="./style.css">
     </head>
     <body>
-        <div class="center">
-            <br>
-            <center><h3>Pizza Bot</h3></center>
-            <br>
-            <img id="productImage" class="product-image" src="dominos.jpg"/>
-            <br>
-            <form action="/action_page.php">
-                <div class="center" id="directions">SELECT A CATEGORY</div>
+        <div class="space-evenly">
+            <div class="left-container center">
+                <h3>Pizza Bot</h3>
                 <br>
-                <div class="">
-                    <div class="btn-group">
-                        <button type="button" id="btn-category" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Category
-                        </button>
-                        <div class="dropdown-menu dropdown-category" id="dropdown-list">
-                            <a class="dropdown-item" href="#">Pizza</a>
-                            <a class="dropdown-item" href="#">Sandwich</a>
-                            <a class="dropdown-item" href="#">Pasta</a>
-                            <a class="dropdown-item" href="#">Wings</a>
-                            <a class="dropdown-item" href="#">Bread</a>
-                            <a class="dropdown-item" href="#">GSalad</a>
-                            <a class="dropdown-item" href="#">Drinks</a>
-                            <a class="dropdown-item" href="#">Dessert</a>
-                            <a class="dropdown-item" href="#">Sides</a>
+                <img id="productImage" class="product-image" src="dominos.jpg"/>
+                <br>
+                <form action="/action_page.php">
+                    <div class="" id="directions">SELECT A CATEGORY</div>
+                    <br>
+                    <div class="">
+                        <div class="btn-group center">
+                            <button type="button" id="btn-category" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Category
+                            </button>
+                            <div class="dropdown-menu dropdown-category" id="dropdown-list">
+                                <a class="dropdown-item" href="#">Pizza</a>
+                                <a class="dropdown-item" href="#">Sandwich</a>
+                                <a class="dropdown-item" href="#">Pasta</a>
+                                <a class="dropdown-item" href="#">Wings</a>
+                                <a class="dropdown-item" href="#">Bread</a>
+                                <a class="dropdown-item" href="#">GSalad</a>
+                                <a class="dropdown-item" href="#">Drinks</a>
+                                <a class="dropdown-item" href="#">Dessert</a>
+                                <a class="dropdown-item" href="#">Sides</a>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" id="btn-item" class="hidden btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Item
+                            </button>
+                            <div class="dropdown-menu dropdown-items" id="test-dropdown-list">
+                            </div>
                         </div>
                     </div>
-                    <div class="btn-group">
-                        <button type="button" id="btn-item" class="hidden btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Item
-                        </button>
-                        <div class="dropdown-menu dropdown-items" id="test-dropdown-list">
-                        </div>
-                    </div>
-                </div>
-                <br>
+            </div>
+            <div class="right-container">
                 <h5>Delivery Information:</h5>
                 <br>
                 <div class="space-between">
@@ -73,12 +74,10 @@
                     <input type="text" id="securitycode" class="inputsq left-box" placeholder="Security Code"/>
                     <input type="text" id="billingzip" class="inputsq right-box" placeholder="Billing Zip Code"/>
                 </div>
-            </form> 
-            <br>
-            <button id="submitOrder" class="btn btn-primary" type="button">Submit Order</button>
-            <br>
-            <br>
-            <br>
+                </form> 
+                <br>
+                <button id="submitOrder" class="btn btn-primary" type="button">Submit Order</button>
+            </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

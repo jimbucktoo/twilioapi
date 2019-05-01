@@ -112,11 +112,6 @@ app.post("/sms", (req, res) => {
                     var myStore = new pizzapi.Store(storeData.result.Stores[0])
                     myStore.ID = storeNumber
 
-                    //var firstName = "James"
-                    //var lastName = "Liang"
-                    //var email = "jamesliang.g@gmail.com"
-                    //var phoneNumber = "3149565183"
-
                     var address = new pizzapi.Address({
                         Street: streetAddress,
                         City: city,
@@ -153,7 +148,6 @@ app.post("/sms", (req, res) => {
                     )
 
                     var cardNumber = cardNumber
-
                     var cardInfo = new order.PaymentObject()
                     cardInfo.Amount = order.Amounts.Customer
                     cardInfo.Number = cardNumber

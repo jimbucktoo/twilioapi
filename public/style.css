@@ -25,16 +25,39 @@ body {
 }
 
 .left-container {
-    margin-left: 5%;
+    margin-left: 15%;
     margin-top: 5%;
 }
 
 .right-container {
     margin-right: 15%;
+    margin-left: 100px;
     margin-top: 5%;
     width: 100%;
     flex-direction: column;
     align-items: center;
+}
+
+.title {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.product-image {
+    width: 300px;
+    border: 1px solid black;
+}
+
+.x-depth-5 {
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+}
+
+.categories {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.items {
+    margin-left: 5px;
 }
 
 .inputsq {
@@ -47,16 +70,12 @@ body {
     margin-top: 10px;
 }
 
-.product-image {
-    width: 50%;
-    border: 1px solid black;
-}
-
-.x-depth-5 {
-    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
-}
-
 .exp-month {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.left-box {
     border: 1px solid black;
     border-radius: 5px;
 }
@@ -67,12 +86,17 @@ body {
     border-radius: 5px;
 }
 
-.left-box {
-    border: 1px solid black;
-    border-radius: 5px;
+.btn-submit {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 ::placeholder {
-    color: #007bff;
+    color: black;
+    font-family: 'Roboto Mono', monospace;
     margin-left: 3px;
+}
+
+.roboto-mono {
+    font-family: 'Roboto Mono', monospace;
 }

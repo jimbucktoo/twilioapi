@@ -13,7 +13,7 @@
             <br>
             <center><h3>Pizza Bot</h3></center>
             <br>
-            <img id="productImage" class="dominos" src="dominos.jpg"/>
+            <img id="productImage" class="product-image" src="dominos.jpg"/>
             <br>
             <form action="/action_page.php">
                 <div class="center" id="directions">SELECT A CATEGORY</div>
@@ -44,20 +44,38 @@
                     </div>
                 </div>
                 <br>
+                <h5>Delivery Information:</h5>
+                <br>
+                <div class="space-between">
+                    <input type="text" id="firstname" class="inputsq left-box" placeholder="First Name"/>
+                    <input type="text" id="lastname" class="inputsq right-box" placeholder="Last Name"/>
+                </div>
+                <input type="text" id="streetaddress" class="inputsq" placeholder="Street Address"/>
+                <div class="space-between">
+                    <input type="text" id="city" class="inputsq left-box" placeholder="City"/>
+                    <input type="text" id="state" class="inputsq right-box" placeholder="State"/>
+                </div>
+                <div class="space-between">
+                    <input type="text" id="zipcode" class="inputsq left-box" placeholder="Zip Code"/>
+                    <input type="text" id="phone" class="inputsq right-box" placeholder="Phone Number"/>
+                </div>
+                <input type="text" id="email" class="inputsq" placeholder="Email Address"/>
+                <br>
+                <br>
                 <h5>Payment Information:</h5>
                 <br>
                 <input type="text" id="cardnumber" class="inputsq" placeholder="Payment Card Number"/>
-                <div class="exp">
-                    <input type="text" id="expmonth" class="inputsq exp-month" placeholder="Exp. Month"/>
-                    <input type="text" id="expyear" class="inputsq exp-year" placeholder="Exp. Year"/>
+                <div class="space-between">
+                    <input type="text" id="expmonth" class="inputsq left-box" placeholder="Exp. Month"/>
+                    <input type="text" id="expyear" class="inputsq right-box" placeholder="Exp. Year"/>
                 </div>
-                <div class="exp">
-                    <input type="text" id="securitycode" class="inputsq sec-code" placeholder="Security Code"/>
-                    <input type="text" id="billingzip" class="inputsq billing-zip" placeholder="Billing Zip Code"/>
+                <div class="space-between">
+                    <input type="text" id="securitycode" class="inputsq left-box" placeholder="Security Code"/>
+                    <input type="text" id="billingzip" class="inputsq right-box" placeholder="Billing Zip Code"/>
                 </div>
             </form> 
             <br>
-            <button id="dominos" class="btn btn-primary" type="button">Submit Order</button>
+            <button id="submitOrder" class="btn btn-primary" type="button">Submit Order</button>
             <br>
             <br>
             <br>
@@ -98,150 +116,36 @@
                     var sides = snapshot.val().result.Categorization.Food.Categories[9]
                     console.log(menu)
 
-                    $("body").on("click", ".dropdown-items a", function(){
-                        console.log(this.text)
-                        var prodName = this.text
-                        $("#directions").text(prodName)
-                        for (var key in products) {
-                            if(products[key].Name == prodName){
-                                var prodCode = products[key].Code
-                                var link = "https://cache.dominos.com/olo/5_58_3/assets/build/market/US/_en/images/img/products/larges/" + prodCode + ".jpg"
-                                console.log(link)
-                                $("#productImage").attr("src", link)
-                                menuItem = prodCode
-                                console.log(menuItem)
-                            }
-                        }
-                    })
-
-                    $(".dropdown-category a").on("click", function() { 
-                        var category = $(this)[0].text
-                        $("#btn-item").text(category)
-                        $("#directions").text("SELECT AN ITEM")
-                        $("#btn-item").removeClass("hidden")
-
-                        var food = snapshot.val().result.Categorization.Food
-                        var pizzaList = food.Categories[0].Categories[2].Products
-                        var sandwichList = food.Categories[1].Categories[1].Products
-                        var pastaList = food.Categories[2].Products
-                        var wingsList = food.Categories[3].Products
-                        var breadList = food.Categories[4].Products
-                        var gsaladList = food.Categories[5].Products
-                        var drinksList = food.Categories[7].Products
-                        var dessertList = food.Categories[8].Products
-                        var sidesList = food.Categories[9].Products
-
-                        function getFoodData(foodList){
-                            var foodDataArray = []
-                            for (let i = 0; i < foodList.length; i++){
-                                var prodInfo = products[foodList[i]]
-                                foodDataArray.push(prodInfo)
-                            }
-                            return foodDataArray
-                        }
-
-                        function getFoodNames(foodArray){
-                            var foodNames = []
-                            for (let i = 0; i < foodArray.length; i++){
-                                foodNames.push(foodArray[i].Name)
-                            }
-                            return foodNames
-                        }
-
-                        function populateItems(foodNamesList){
-                            var thisUL = document.getElementById("text-dropdown-list")
-                            var drop = document.getElementById("test-dropdown-list")
-                            while (drop.hasChildNodes()) {
-                                drop.removeChild(drop.firstChild);
-                            }
-                            for(var i = 0; i < foodNamesList.length; i++) {
-                                var link = document.createElement("a")
-                                link.text = foodNamesList[i]
-                                link.setAttribute("class", "dropdown-item")
-                                $(".dropdown-item").addClass("menu-item");
-                                link.setAttribute("href", "#")
-                                drop.appendChild(link)
-                            }
-                        }
-
-                        switch(category) {
-                            case "Pizza":
-                                var pizzaArray = getFoodData(pizzaList)
-                                var pizzaNamesList = getFoodNames(pizzaArray)
-                                populateItems(pizzaNamesList)
-                                break;
-                            case "Sandwich":
-                                var sandwichArray = getFoodData(sandwichList)
-                                var sandwichNamesList = getFoodNames(sandwichArray)
-                                populateItems(sandwichNamesList)
-                                break;
-                            case "Pasta":
-                                var pastaArray = getFoodData(pastaList)
-                                var pastaNamesList = getFoodNames(pastaArray)
-                                populateItems(pastaNamesList)
-                                break;
-                            case "Wings":
-                                var wingsArray = getFoodData(wingsList)
-                                var wingsNamesList = getFoodNames(wingsArray)
-                                populateItems(wingsNamesList)
-                                break;
-                            case "Bread":
-                                var breadArray = getFoodData(breadList)
-                                var breadNamesList = getFoodNames(breadArray)
-                                populateItems(breadNamesList)
-                                break;
-                            case "GSalad":
-                                var gsaladArray = getFoodData(gsaladList)
-                                var gsaladNamesList = getFoodNames(gsaladArray)
-                                populateItems(gsaladNamesList)
-                                break;
-                            case "GSalad":
-                                var gsaladArray = getFoodData(gsaladList)
-                                var gsaladNamesList = getFoodNames(gsaladArray)
-                                populateItems(gsaladNamesList)
-                                break;
-                            case "Drinks":
-                                var drinksArray = getFoodData(drinksList)
-                                var drinksNamesList = getFoodNames(drinksArray)
-                                populateItems(drinksNamesList)
-                                break;
-                            case "Dessert":
-                                var dessertArray = getFoodData(dessertList)
-                                var dessertNamesList = getFoodNames(dessertArray)
-                                populateItems(dessertNamesList)
-                                break;
-                            case "Sides":
-                                var sidesArray = getFoodData(sidesList)
-                                var sidesNamesList = getFoodNames(sidesArray)
-                                populateItems(sidesNamesList)
-                                break;
-                            default:
-                                break;
-                        }
-                    })
-
-                    $("#dominos").on("click", function() {
+                    $("#submitOrder").on("click", function() {
                         $(this).toggleClass("x-depth-5")         
-                        console.log("Requesting Dominos...")
+                        console.log("Requesting Dominos API...")
                         //var proxy = "http://cors-anywhere.herokuapp.com/"
                         var development = "http://localhost:1337"
                         var sms = "http://localhost:1337/sms"
                         var production = "https://twilioapi-io.herokuapp.com/"
 
-                        fetch(production)
-                            .then(function(response) {
-                                console.log(response)
-                                return response.json()
-                            })
-                            .then(function(myJson) {
-                                console.log(myJson)
-                            })
 
+                        var firstname = document.getElementById("firstname").value
+                        var lastname = document.getElementById("lastname").value
+                        var streetaddress = document.getElementById("streetaddress").value
+                        var city = document.getElementById("city").value
+                        var state = document.getElementById("state").value
+                        var zipcode = document.getElementById("zipcode").value
+                        var phone = document.getElementById("phone").value
+                        var email = document.getElementById("email").value
                         var cardnumber = document.getElementById("cardnumber").value
                         var expmonth = document.getElementById("expmonth").value
                         var expyear = document.getElementById("expyear").value
                         var securitycode = document.getElementById("securitycode").value
                         var billingzip = document.getElementById("billingzip").value
+                        console.log("First Name: " + firstname)
+                        console.log("Last Name: " + lastname)
+                        console.log("Street Address: " + streetaddress)
+                        console.log("City: " + city)
+                        console.log("State: " + state)
+                        console.log("Zip Code: " + zipcode)
+                        console.log("Phone: " + phone)
+                        console.log("Email: " + email)
                         console.log("Card Number: " + cardnumber)
                         console.log("Exp. Month: " + expmonth)
                         console.log("Exp. Year: " + expyear)
@@ -250,6 +154,14 @@
                         console.log("Menu Item: " + menuItem)
 
                         $.post( production, {
+                            firstname: firstname,
+                            lastname: lastname,
+                            streetaddress: streetaddress,
+                            city: city,
+                            state: state,
+                            zipcode: zipcode,
+                            phone: phone,
+                            email: email,
                             cardnumber: cardnumber,
                             expmonth: expmonth,
                             expyear: expyear,
@@ -261,11 +173,142 @@
                                 console.log(data)
                                 console.log(status)
                             })
+
+                        fetch(production)
+                            .then(function(response) {
+                                console.log(response)
+                                return response.json()
+                            })
+                            .then(function(myJson) {
+                                console.log(myJson)
+                            })
                     })
 
-                    $("#dominos").on("mousedown", function(){
+                    $("#submitOrder").on("mousedown", function(){
                         $(this).toggleClass("x-depth-5")         
                     })
+                })
+
+                $("body").on("click", ".dropdown-items a", function(){
+                    console.log(this.text)
+                    var prodName = this.text
+                    $("#directions").text(prodName)
+                    for (var key in products) {
+                        if(products[key].Name == prodName){
+                            var prodCode = products[key].Code
+                            var link = "https://cache.dominos.com/olo/5_58_3/assets/build/market/US/_en/images/img/products/larges/" + prodCode + ".jpg"
+                            console.log(link)
+                            $("#productImage").attr("src", link)
+                            menuItem = prodCode
+                            console.log(menuItem)
+                        }
+                    }
+                })
+
+                $(".dropdown-category a").on("click", function() { 
+                    var category = $(this)[0].text
+                    $("#btn-item").text(category)
+                    $("#directions").text("SELECT AN ITEM")
+                    $("#btn-item").removeClass("hidden")
+
+                    var food = snapshot.val().result.Categorization.Food
+                    var pizzaList = food.Categories[0].Categories[2].Products
+                    var sandwichList = food.Categories[1].Categories[1].Products
+                    var pastaList = food.Categories[2].Products
+                    var wingsList = food.Categories[3].Products
+                    var breadList = food.Categories[4].Products
+                    var gsaladList = food.Categories[5].Products
+                    var drinksList = food.Categories[7].Products
+                    var dessertList = food.Categories[8].Products
+                    var sidesList = food.Categories[9].Products
+
+                    function getFoodData(foodList){
+                        var foodDataArray = []
+                        for (let i = 0; i < foodList.length; i++){
+                            var prodInfo = products[foodList[i]]
+                            foodDataArray.push(prodInfo)
+                        }
+                        return foodDataArray
+                    }
+
+                    function getFoodNames(foodArray){
+                        var foodNames = []
+                        for (let i = 0; i < foodArray.length; i++){
+                            foodNames.push(foodArray[i].Name)
+                        }
+                        return foodNames
+                    }
+
+                    function populateItems(foodNamesList){
+                        var thisUL = document.getElementById("text-dropdown-list")
+                        var drop = document.getElementById("test-dropdown-list")
+                        while (drop.hasChildNodes()) {
+                            drop.removeChild(drop.firstChild);
+                        }
+                        for(var i = 0; i < foodNamesList.length; i++) {
+                            var link = document.createElement("a")
+                            link.text = foodNamesList[i]
+                            link.setAttribute("class", "dropdown-item")
+                            $(".dropdown-item").addClass("menu-item");
+                            link.setAttribute("href", "#")
+                            drop.appendChild(link)
+                        }
+                    }
+
+                    switch(category) {
+                        case "Pizza":
+                            var pizzaArray = getFoodData(pizzaList)
+                            var pizzaNamesList = getFoodNames(pizzaArray)
+                            populateItems(pizzaNamesList)
+                            break;
+                        case "Sandwich":
+                            var sandwichArray = getFoodData(sandwichList)
+                            var sandwichNamesList = getFoodNames(sandwichArray)
+                            populateItems(sandwichNamesList)
+                            break;
+                        case "Pasta":
+                            var pastaArray = getFoodData(pastaList)
+                            var pastaNamesList = getFoodNames(pastaArray)
+                            populateItems(pastaNamesList)
+                            break;
+                        case "Wings":
+                            var wingsArray = getFoodData(wingsList)
+                            var wingsNamesList = getFoodNames(wingsArray)
+                            populateItems(wingsNamesList)
+                            break;
+                        case "Bread":
+                            var breadArray = getFoodData(breadList)
+                            var breadNamesList = getFoodNames(breadArray)
+                            populateItems(breadNamesList)
+                            break;
+                        case "GSalad":
+                            var gsaladArray = getFoodData(gsaladList)
+                            var gsaladNamesList = getFoodNames(gsaladArray)
+                            populateItems(gsaladNamesList)
+                            break;
+                        case "GSalad":
+                            var gsaladArray = getFoodData(gsaladList)
+                            var gsaladNamesList = getFoodNames(gsaladArray)
+                            populateItems(gsaladNamesList)
+                            break;
+                        case "Drinks":
+                            var drinksArray = getFoodData(drinksList)
+                            var drinksNamesList = getFoodNames(drinksArray)
+                            populateItems(drinksNamesList)
+                            break;
+                        case "Dessert":
+                            var dessertArray = getFoodData(dessertList)
+                            var dessertNamesList = getFoodNames(dessertArray)
+                            populateItems(dessertNamesList)
+                            break;
+                        case "Sides":
+                            var sidesArray = getFoodData(sidesList)
+                            var sidesNamesList = getFoodNames(sidesArray)
+                            populateItems(sidesNamesList)
+                            break;
+                        default:
+                            break;
+                    }
                 })
             })
         </script>

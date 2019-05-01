@@ -49,14 +49,18 @@ app.get("/", (req, res) => {
 
     const client = require("twilio")(accountSid, authToken)
 
-    client.messages.create({
-        to: "+13149565183",
-        from: "13145825438",
-        body: "Would you like to order a pizza? [ yes | no ]"
-    }).then(function(message) {
-        res.json(message)
-    }).catch(function(err){
-        res.send(err)
+    var readRef = firebase.database().ref("/firebaseObj")
+    readRef.on("value", function(snapshot) {
+        var phoneNumber = snapshot.val().phone
+        client.messages.create({
+            to: phoneNumber,
+            from: "13145825438",
+            body: "Would you like to order a pizza? [ yes | no ]"
+        }).then(function(message) {
+            res.json(message)
+        }).catch(function(err){
+            res.send(err)
+        })
     })
 })
 
@@ -86,6 +90,14 @@ app.post("/sms", (req, res) => {
             function(storeData){
                 var readRef = firebase.database().ref("/firebaseObj")
                 readRef.on("value", function(snapshot) {
+                    var firstName = snapshot.val().firstname
+                    var lastName = snapshot.val().lastname
+                    var streetAddress = snapshot.val().streetaddress
+                    var city = snapshot.val().city
+                    var state = snapshot.val().state
+                    var zipCode = snapshot.val().zipcode
+                    var phone = snapshot.val().phone
+                    var email = snapshot.val().email
                     var cardNumber = snapshot.val().cardnumber
                     var expMonth = snapshot.val().expmonth
                     var expYear = snapshot.val().expyear
@@ -100,16 +112,16 @@ app.post("/sms", (req, res) => {
                     var myStore = new pizzapi.Store(storeData.result.Stores[0])
                     myStore.ID = storeNumber
 
-                    var firstName = "James"
-                    var lastName = "Liang"
-                    var email = "jamesliang.g@gmail.com"
-                    var phoneNumber = "3149565183"
+                    //var firstName = "James"
+                    //var lastName = "Liang"
+                    //var email = "jamesliang.g@gmail.com"
+                    //var phoneNumber = "3149565183"
 
                     var address = new pizzapi.Address({
-                        Street: "1644 Platte St.",
-                        City: "Denver",
-                        Region: "CO",
-                        PostalCode: "80202"
+                        Street: streetAddress,
+                        City: city,
+                        Region: state,
+                        PostalCode: zipCode
                     })
 
                     var customerProfile = new pizzapi.Customer(
@@ -118,7 +130,7 @@ app.post("/sms", (req, res) => {
                             lastName: lastName,
                             address: address,
                             email: email,
-                            phone: phoneNumber
+                            phone: phone
                         }
                     )
 

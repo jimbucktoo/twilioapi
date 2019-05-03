@@ -99,6 +99,7 @@
             $( document ).ready(function() {
                 var database = firebase.database()
                 var menuItem
+                var menuItemName
                 firebase.database().ref("/storeData/menu").once("value").then(function(snapshot) {
                     var menu = snapshot.val().result
                     var products = snapshot.val().result.Products
@@ -151,6 +152,7 @@
                         console.log("Security Code: " + securitycode)
                         console.log("Billing Zip Code: " + billingzip)
                         console.log("Menu Item: " + menuItem)
+                        console.log("Menu Item Name: " + menuItemName)
 
                         $.post( production, {
                             firstname: firstname,
@@ -166,7 +168,8 @@
                             expyear: expyear,
                             securitycode: securitycode,
                             billingzip: billingzip,
-                            menuitem: menuItem
+                            menuitem: menuItem,
+                            menuitemname: menuItemName
                         },
                             function(data, status){
                                 console.log(data)
@@ -188,8 +191,9 @@
                     })
 
                     $("body").on("click", ".dropdown-items a", function(){
-                        console.log(this.text)
                         var prodName = this.text
+                        menuItemName = prodName
+                        console.log(menuItemName)
                         $("#directions").text(prodName)
                         for (var key in products) {
                             if(products[key].Name == prodName){

@@ -100,6 +100,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             $( document ).ready(function() {
+                //var proxy = "http://cors-anywhere.herokuapp.com/"
+                var development = "http://localhost:1337"
+                var sms = "http://localhost:1337/sms"
+                var production = "https://twilioapi-io.herokuapp.com/"
                 fetch(production + "submit")
                     .then(function(response) {
                         console.log(response)
@@ -131,14 +135,8 @@
                     console.log(menu)
                     $("#btn-category").removeClass("hidden")
                     $("#spinner").addClass("hidden")
-
                     $("#submitOrder").on("click", function() {
                         $(this).toggleClass("x-depth-5")         
-                        //var proxy = "http://cors-anywhere.herokuapp.com/"
-                        var development = "http://localhost:1337"
-                        var sms = "http://localhost:1337/sms"
-                        var production = "https://twilioapi-io.herokuapp.com/"
-
                         if (menuItemName == undefined) {
                             alert("Please select a menu item to submit your order.") 
                         } else {

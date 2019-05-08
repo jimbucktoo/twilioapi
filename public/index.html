@@ -58,21 +58,21 @@
                 </div>
                 <div class="space-between">
                     <input type="text" id="zipcode" class="inputsq left-box" placeholder="Zip Code" required/>
-                    <input type="text" id="phone" class="inputsq right-box" placeholder="Phone Number" required/>
+                    <input type="text" id="phone" class="inputsq right-box" placeholder="Phone Number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" title="Invalid Phone Number" required/>
                 </div>
-                <input type="text" id="email" class="inputsq" placeholder="Email Address" required/>
+                <input type="text" id="email" class="inputsq" placeholder="Email Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Invalid Email Address" required/>
                 <br>
                 <br>
                 <h5 class="roboto-mono">Payment Information:</h5>
                 <br>
-                <input type="text" id="cardnumber" class="inputsq" placeholder="Payment Card Number"/>
+                <input type="text" id="cardnumber" class="inputsq" placeholder="Payment Card Number" pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$" title="Invalid Credit Card Number" required/>
                 <div class="space-between">
-                    <input type="text" id="expmonth" class="inputsq left-box" placeholder="Exp. Month"/>
-                    <input type="text" id="expyear" class="inputsq right-box" placeholder="Exp. Year"/>
+                    <input type="text" id="expmonth" class="inputsq left-box" placeholder="Exp. Month" pattern="^(0?[1-9]|1[012])$" title="Invalid Expiration Month" required/>
+                    <input type="text" id="expyear" class="inputsq right-box" placeholder="Exp. Year" pattern="^(\d{4})(\d{4})?$" title="Invalid Expiration Year" required/>
                 </div>
                 <div class="space-between">
-                    <input type="text" id="securitycode" class="inputsq left-box" placeholder="Security Code"/>
-                    <input type="text" id="billingzip" class="inputsq right-box" placeholder="Billing Zip Code"/>
+                    <input type="text" id="securitycode" class="inputsq left-box" placeholder="Security Code" pattern="/^[0-9]{3,4}$/" title="Invalid Security Code" required/>
+                    <input type="text" id="billingzip" class="inputsq right-box" placeholder="Billing Zip Code" pattern="^\d{5}(?:[-\s]\d{4})?$" title="Invalid Billing Zip Code" required/>
                 </div>
                 <br>
                 <button id="submitOrder" class="btn btn-primary roboto-mono btn-submit center" type="submit">Submit Order</button>
@@ -121,15 +121,15 @@
 
                     $("#submitOrder").on("click", function() {
                         $(this).toggleClass("x-depth-5")         
-                        console.log("Requesting Dominos API...")
                         //var proxy = "http://cors-anywhere.herokuapp.com/"
                         var development = "http://localhost:1337"
                         var sms = "http://localhost:1337/sms"
                         var production = "https://twilioapi-io.herokuapp.com/"
 
                         if (menuItemName == undefined) {
-                            alert("Please select a menu item.") 
+                            alert("Please select a menu item to submit your order.") 
                         } else {
+                            console.log("Requesting Dominos API...")
                             var firstname = document.getElementById("firstname").value
                             var lastname = document.getElementById("lastname").value
                             var streetaddress = document.getElementById("streetaddress").value

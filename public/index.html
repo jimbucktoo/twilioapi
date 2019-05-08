@@ -104,14 +104,7 @@
                 var development = "http://localhost:1337"
                 var sms = "http://localhost:1337/sms"
                 var production = "https://twilioapi-io.herokuapp.com/"
-                fetch(production + "submit")
-                    .then(function(response) {
-                        console.log(response)
-                        return response.json()
-                    })
-                    .then(function(myJson) {
-                        console.log(myJson)
-                    })
+                fetch(production)
                 $("#order-form").submit(function(e){
                     return false;
                 });

@@ -47,17 +47,7 @@ myStore.getMenu(
 )
 
 app.get("/", (req, res) => {
-    myStore.getMenu(
-        function(storeData){
-            var menu = storeData.menuData
-            firebase.database().ref("/storeData").set({
-                menu
-            })
-        }
-    )
-
     const client = require("twilio")(accountSid, authToken)
-
     var readRef = firebase.database().ref("/firebaseObj")
     readRef.on("value", function(snapshot) {
         var phoneNumber = snapshot.val().phone

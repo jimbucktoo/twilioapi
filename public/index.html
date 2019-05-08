@@ -16,7 +16,7 @@
                 <br>
                 <img id="productImage" class="product-image" src="dominos.jpg"/>
                 <br>
-                <form action="/action_page.php">
+                <form id="order-form" action="/">
                     <div class="center" id="directions">SELECT A CATEGORY</div>
                     <br>
                     <div class="space-between">
@@ -48,19 +48,19 @@
                 <h5 class="roboto-mono">Delivery Information:</h5>
                 <br>
                 <div class="space-between">
-                    <input type="text" id="firstname" class="inputsq left-box" placeholder="First Name"/>
-                    <input type="text" id="lastname" class="inputsq right-box" placeholder="Last Name"/>
+                    <input type="text" id="firstname" class="inputsq left-box" placeholder="First Name" required/>
+                    <input type="text" id="lastname" class="inputsq right-box" placeholder="Last Name" required/>
                 </div>
-                <input type="text" id="streetaddress" class="inputsq" placeholder="Street Address"/>
+                <input type="text" id="streetaddress" class="inputsq" placeholder="Street Address" required/>
                 <div class="space-between">
-                    <input type="text" id="city" class="inputsq left-box" placeholder="City"/>
-                    <input type="text" id="state" class="inputsq right-box" placeholder="State"/>
+                    <input type="text" id="city" class="inputsq left-box" placeholder="City"/ required>
+                    <input type="text" id="state" class="inputsq right-box" placeholder="State" required/>
                 </div>
                 <div class="space-between">
-                    <input type="text" id="zipcode" class="inputsq left-box" placeholder="Zip Code"/>
-                    <input type="text" id="phone" class="inputsq right-box" placeholder="Phone Number"/>
+                    <input type="text" id="zipcode" class="inputsq left-box" placeholder="Zip Code" required/>
+                    <input type="text" id="phone" class="inputsq right-box" placeholder="Phone Number" required/>
                 </div>
-                <input type="text" id="email" class="inputsq" placeholder="Email Address"/>
+                <input type="text" id="email" class="inputsq" placeholder="Email Address" required/>
                 <br>
                 <br>
                 <h5 class="roboto-mono">Payment Information:</h5>
@@ -74,9 +74,9 @@
                     <input type="text" id="securitycode" class="inputsq left-box" placeholder="Security Code"/>
                     <input type="text" id="billingzip" class="inputsq right-box" placeholder="Billing Zip Code"/>
                 </div>
-                </form> 
                 <br>
-                <button id="submitOrder" class="btn btn-primary roboto-mono btn-submit center" type="button">Submit Order</button>
+                <button id="submitOrder" class="btn btn-primary roboto-mono btn-submit center" type="submit">Submit Order</button>
+                </form> 
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -97,6 +97,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             $( document ).ready(function() {
+                $("#order-form").submit(function(e){
+                    return false;
+                });
                 var database = firebase.database()
                 var menuItem
                 var menuItemName
@@ -124,66 +127,69 @@
                         var sms = "http://localhost:1337/sms"
                         var production = "https://twilioapi-io.herokuapp.com/"
 
+                        if (menuItemName == undefined) {
+                            alert("Please select a menu item.") 
+                        } else {
+                            var firstname = document.getElementById("firstname").value
+                            var lastname = document.getElementById("lastname").value
+                            var streetaddress = document.getElementById("streetaddress").value
+                            var city = document.getElementById("city").value
+                            var state = document.getElementById("state").value
+                            var zipcode = document.getElementById("zipcode").value
+                            var phone = document.getElementById("phone").value
+                            var email = document.getElementById("email").value
+                            var cardnumber = document.getElementById("cardnumber").value
+                            var expmonth = document.getElementById("expmonth").value
+                            var expyear = document.getElementById("expyear").value
+                            var securitycode = document.getElementById("securitycode").value
+                            var billingzip = document.getElementById("billingzip").value
+                            console.log("First Name: " + firstname)
+                            console.log("Last Name: " + lastname)
+                            console.log("Street Address: " + streetaddress)
+                            console.log("City: " + city)
+                            console.log("State: " + state)
+                            console.log("Zip Code: " + zipcode)
+                            console.log("Phone: " + phone)
+                            console.log("Email: " + email)
+                            console.log("Card Number: " + cardnumber)
+                            console.log("Exp. Month: " + expmonth)
+                            console.log("Exp. Year: " + expyear)
+                            console.log("Security Code: " + securitycode)
+                            console.log("Billing Zip Code: " + billingzip)
+                            console.log("Menu Item: " + menuItem)
+                            console.log("Menu Item Name: " + menuItemName)
 
-                        var firstname = document.getElementById("firstname").value
-                        var lastname = document.getElementById("lastname").value
-                        var streetaddress = document.getElementById("streetaddress").value
-                        var city = document.getElementById("city").value
-                        var state = document.getElementById("state").value
-                        var zipcode = document.getElementById("zipcode").value
-                        var phone = document.getElementById("phone").value
-                        var email = document.getElementById("email").value
-                        var cardnumber = document.getElementById("cardnumber").value
-                        var expmonth = document.getElementById("expmonth").value
-                        var expyear = document.getElementById("expyear").value
-                        var securitycode = document.getElementById("securitycode").value
-                        var billingzip = document.getElementById("billingzip").value
-                        console.log("First Name: " + firstname)
-                        console.log("Last Name: " + lastname)
-                        console.log("Street Address: " + streetaddress)
-                        console.log("City: " + city)
-                        console.log("State: " + state)
-                        console.log("Zip Code: " + zipcode)
-                        console.log("Phone: " + phone)
-                        console.log("Email: " + email)
-                        console.log("Card Number: " + cardnumber)
-                        console.log("Exp. Month: " + expmonth)
-                        console.log("Exp. Year: " + expyear)
-                        console.log("Security Code: " + securitycode)
-                        console.log("Billing Zip Code: " + billingzip)
-                        console.log("Menu Item: " + menuItem)
-                        console.log("Menu Item Name: " + menuItemName)
+                            $.post( production, {
+                                firstname: firstname,
+                                lastname: lastname,
+                                streetaddress: streetaddress,
+                                city: city,
+                                state: state,
+                                zipcode: zipcode,
+                                phone: phone,
+                                email: email,
+                                cardnumber: cardnumber,
+                                expmonth: expmonth,
+                                expyear: expyear,
+                                securitycode: securitycode,
+                                billingzip: billingzip,
+                                menuitem: menuItem,
+                                menuitemname: menuItemName
+                            },
+                                function(data, status){
+                                    console.log(data)
+                                    console.log(status)
+                                })
 
-                        $.post( production, {
-                            firstname: firstname,
-                            lastname: lastname,
-                            streetaddress: streetaddress,
-                            city: city,
-                            state: state,
-                            zipcode: zipcode,
-                            phone: phone,
-                            email: email,
-                            cardnumber: cardnumber,
-                            expmonth: expmonth,
-                            expyear: expyear,
-                            securitycode: securitycode,
-                            billingzip: billingzip,
-                            menuitem: menuItem,
-                            menuitemname: menuItemName
-                        },
-                            function(data, status){
-                                console.log(data)
-                                console.log(status)
-                            })
-
-                        fetch(production)
-                            .then(function(response) {
-                                console.log(response)
-                                return response.json()
-                            })
-                            .then(function(myJson) {
-                                console.log(myJson)
-                            })
+                            fetch(production)
+                                .then(function(response) {
+                                    console.log(response)
+                                    return response.json()
+                                })
+                                .then(function(myJson) {
+                                    console.log(myJson)
+                                })
+                        }
                     })
 
                     $("#submitOrder").on("mousedown", function(){

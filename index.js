@@ -37,16 +37,21 @@ function isYes(msg) {
 var myStore = new pizzapi.Store({ID: 4336})
 var store = {menu: "food"}
 
-myStore.getMenu(
-    function(storeData){
-        var menu = storeData.menuData
-        firebase.database().ref("/storeData").set({
-            menu
-        })
-    }
-)
+
 
 app.get("/", (req, res) => {
+    myStore.getMenu(
+        function(storeData){
+            var menu = storeData.menuData
+            firebase.database().ref("/storeData").set({
+                menu
+            })
+        }
+    )
+    res.send("Menu Generated.")
+})
+
+app.get("/submit", (req, res) => {
     const client = require("twilio")(accountSid, authToken)
     var readRef = firebase.database().ref("/firebaseObj")
     readRef.on("value", function(snapshot) {

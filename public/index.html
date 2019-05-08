@@ -51,31 +51,31 @@
                 <h5 class="roboto-mono">Delivery Information:</h5>
                 <br>
                 <div class="space-between">
-                    <input type="text" id="firstname" class="inputsq left-box" placeholder="First Name" required/>
-                    <input type="text" id="lastname" class="inputsq right-box" placeholder="Last Name" required/>
+                    <input type="text" id="firstname" class="inputsq left-box" placeholder="First Name" onmouseover="this.title='';" required/>
+                    <input type="text" id="lastname" class="inputsq right-box" placeholder="Last Name" onmouseover="this.title='';" required/>
                 </div>
-                <input type="text" id="streetaddress" class="inputsq" placeholder="Street Address" required/>
+                <input type="text" id="streetaddress" class="inputsq" placeholder="Street Address" onmouseover="this.title='';" required/>
                 <div class="space-between">
-                    <input type="text" id="city" class="inputsq left-box" placeholder="City"/ required>
-                    <input type="text" id="state" class="inputsq right-box" placeholder="State" required/>
+                    <input type="text" id="city" class="inputsq left-box" placeholder="City" onmouseover="this.title='';" required/>
+                    <input type="text" id="state" class="inputsq right-box" placeholder="State" onmouseover="this.title='';" required/>
                 </div>
                 <div class="space-between">
-                    <input type="text" id="zipcode" class="inputsq left-box" placeholder="Zip Code" required/>
-                    <input type="text" id="phone" class="inputsq right-box" placeholder="Phone Number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" title="Invalid Phone Number" required/>
+                    <input type="text" id="zipcode" class="inputsq left-box" placeholder="Zip Code" onmouseover="this.title='';" required/>
+                    <input type="text" id="phone" class="inputsq right-box" placeholder="Phone Number" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" title="Invalid Phone Number" onmouseover="this.title='';" required/>
                 </div>
-                <input type="text" id="email" class="inputsq" placeholder="Email Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Invalid Email Address" required/>
+                <input type="text" id="email" class="inputsq" placeholder="Email Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Invalid Email Address" onmouseover="this.title='';" required/>
                 <br>
                 <br>
                 <h5 class="roboto-mono">Payment Information:</h5>
                 <br>
-                <input type="text" id="cardnumber" class="inputsq" placeholder="Payment Card Number" pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$" title="Invalid Credit Card Number" required/>
+                <input type="text" id="cardnumber" class="inputsq" placeholder="Payment Card Number" pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$" title="Invalid Credit Card Number" onmouseover="this.title='';" required/>
                 <div class="space-between">
-                    <input type="text" id="expmonth" class="inputsq left-box" placeholder="Exp. Month" pattern="^(0?[1-9]|1[012])$" title="Invalid Expiration Month" required/>
-                    <input type="text" id="expyear" class="inputsq right-box" placeholder="Exp. Year" pattern="^(\d{4})(\d{4})?$" title="Invalid Expiration Year" required/>
+                    <input type="text" id="expmonth" class="inputsq left-box" placeholder="Exp. Month" pattern="^(0?[1-9]|1[012])$" title="Invalid Expiration Month" onmouseover="this.title='';" required/>
+                    <input type="text" id="expyear" class="inputsq right-box" placeholder="Exp. Year" pattern="^(\d{4})(\d{4})?$" title="Invalid Expiration Year" onmouseover="this.title='';" required/>
                 </div>
                 <div class="space-between">
-                    <input type="text" id="securitycode" class="inputsq left-box" placeholder="Security Code" pattern="/^[0-9]{3,4}$/" title="Invalid Security Code" required/>
-                    <input type="text" id="billingzip" class="inputsq right-box" placeholder="Billing Zip Code" pattern="^\d{5}(?:[-\s]\d{4})?$" title="Invalid Billing Zip Code" required/>
+                    <input type="text" id="securitycode" class="inputsq left-box" placeholder="Security Code" pattern="/^[0-9]{3,4}$/" title="Invalid Security Code" onmouseover="this.title='';" required/>
+                    <input type="text" id="billingzip" class="inputsq right-box" placeholder="Billing Zip Code" pattern="^\d{5}(?:[-\s]\d{4})?$" title="Invalid Billing Zip Code" onmouseover="this.title='';" required/>
                 </div>
                 <br>
                 <button id="submitOrder" class="btn btn-primary roboto-mono btn-submit center" type="submit">Submit Order</button>
